@@ -316,8 +316,12 @@ function filtered() {
   });
 }
 
+const DEPT_OPTIONS = ["B.Sc (CS)", "BCA", "B.Sc (IT)", "B.Sc (AI&ML)", "B.Sc (CD&F)", "BBA", "B.Com", "B.Com (CA)"];
+
 function populateFilters() {
-  const depts = [...new Set(paired.map(p=>p.department).filter(Boolean))].sort();
+  // start from the known course list, then add any other departments found in the data
+  const fromData = paired.map(p=>p.department).filter(Boolean);
+  const depts = [...new Set(DEPT_OPTIONS.concat(fromData))];
   const secs = [...new Set(paired.map(p=>p.section).filter(Boolean))].sort();
   const dSel = document.getElementById('fDept'), sSel = document.getElementById('fSection');
   const dCur = dSel.value, sCur = sSel.value;
